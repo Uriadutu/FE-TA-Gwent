@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../auth/Firebase";
 import Logo from "../img/sp.png";
 
@@ -21,7 +18,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
+      navigate("/genre");
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         setError("Pengguna tidak ditemukan.");
@@ -35,124 +32,73 @@ const Login = () => {
     }
   };
 
-  const handleForgotPassword = async () => {
-    setError("");
-    setResetMessage("");
-
-    if (!email) {
-      setError("Masukkan Email Untuk Mengatur Ulang Kata Sandi.");
-      return;
-    }
-
-    try {
-      await sendPasswordResetEmail(auth, email);
-      setResetMessage("Pesan Pengaturan Ulang Kata Sandi Telah Dikirim.");
-    } catch (err) {
-      setError("Gagal mengirim Pesan pengaturan ulang kata sandi.");
-    }
-  };
-
   return (
-    <div className="relative bg-white w-full h-screen flex items-center justify-center px-4">
-      <div className="absolute w-[300px] h-[200px] bg-green-300 opacity-30 blur-3xl rounded-full top-5 left-5 md:w-[400px] md:h-[250px] md:left-32"></div>
-      <div className="absolute w-[350px] h-[220px] bg-purple-300 opacity-30 blur-3xl rounded-full bottom-5 right-5 md:w-[500px] md:h-[300px] md:right-32"></div>
+    <div className="relative w-full h-screen flex items-center justify-center px-3 sm:px-4">
+      {/* Dekorasi Blur */}
+      <div className="absolute w-60 h-40 bg-purple-300 opacity-20 blur-3xl rounded-full top-5 left-5"></div>
+      <div className="absolute w-72 h-48 bg-purple-300 opacity-20 blur-3xl rounded-full bottom-5 right-5"></div>
 
-      <div className="w-full max-w-md relative z-10 ">
-        <div className="bg-white p-4 shadow-md rounded-[2px]">
-          <form
-            className="px-1 sm:px-6 pt-6 pb-1 w-full mx-auto"
-            onSubmit={handleLogin}
-          >
-            {/* Logo & Judul */}
-            <div className="flex flex-col w-full items-center">
-              <img src={Logo} alt="Logo" className="w-24 sm:w-28 mb-2" />
-              <div className="relative w-full z-10 mb-3">
-                <div className="text-gray-800 text-center z-10 absolute flex w-full justify-center font-semibold text-2xl">
-                  <p className="bg-white px-3 sm:text-2xl text-lg">Masuk</p>
-                </div>
-                <div className="absolute top-4 sm:top-5 z-0 w-full">
-                  <div className="border-b border-gray-400 w-full"></div>
-                </div>
-              </div>
-            </div>
-
-            {/* Pesan Error & Reset */}
-            <div className="mt-10">
-              {error && (
-                <p className="text-red-600 z-1 border border-red-400 bg-red-100 rounded-[2px] text-sm p-2 my-2 text-center">
-                  {error}
-                </p>
-              )}
-              {resetMessage && (
-                <p className="text-green-600 border border-green-400 bg-green-100 rounded-[2px] text-sm p-2 my-2 text-center">
-                  {resetMessage}
-                </p>
-              )}
-            </div>
-
-            {/* Input Email */}
-            <div className="mt-10">
-              <input
-                type="email"
-                className="w-full p-3 rounded-[2px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 mt-1"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-
-            {/* Input Password */}
-            <div className="mt-3">
-              <input
-                type="password"
-                className="w-full p-3 rounded-[2px] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-700 mt-1"
-                placeholder="Kata Sandi"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            {/* Tombol Aksi */}
-            <div className="mt-6 flex flex-col space-y-3">
-              <button
-                type="submit"
-                className="w-full p-3 bg-green-500 text-white rounded-[2px] hover:bg-green-600 transition"
-              >
+      <div className="w-full max-w-sm relative z-10">
+        <div className="bg-white p-5 shadow rounded-md">
+          <form className="w-full space-y-4" onSubmit={handleLogin}>
+            <div className="flex flex-col items-center mb-4">
+              <img src={Logo} alt="Logo" className="w-20 mb-2" />
+              <h2 className="text-gray-800 font-semibold text-lg border-b border-gray-300 w-full text-center pb-1">
                 Masuk
-              </button>
+              </h2>
             </div>
 
-            {/* Lupa kata sandi */}
-            <div className="text-left mt-3">
-              <button
-                type="button"
-                onClick={handleForgotPassword}
-                className="text-sm text-green-500 hover:underline"
-              >
-                Lupa kata sandi?
-              </button>
-            </div>
+            {/* Error Message */}
+            {error && (
+              <p className="text-red-600 bg-red-50 border border-red-200 rounded px-2 py-1 text-xs text-center">
+                {error}
+              </p>
+            )}
+            {resetMessage && (
+              <p className="text-purple-600 bg-purple-50 border border-purple-200 rounded px-2 py-1 text-xs text-center">
+                {resetMessage}
+              </p>
+            )}
+
+            {/* Email */}
+            <input
+              type="email"
+              className="w-full px-3 py-2 rounded border border-gray-300 text-sm focus:ring-1 focus:ring-purple-400 focus:outline-none"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            {/* Password */}
+            <input
+              type="password"
+              className="w-full px-3 py-2 rounded border border-gray-300 text-sm focus:ring-1 focus:ring-purple-400 focus:outline-none"
+              placeholder="Kata Sandi"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            {/* Tombol Login */}
+            <button
+              type="submit"
+              className="w-full px-3 py-2 text-sm bg-purple-500 text-white rounded hover:bg-purple-600 transition"
+            >
+              Masuk
+            </button>
           </form>
         </div>
 
-        <div className="bg-white p-4 mt-3 shadow-md w-full max-w-2xl rounded-[2px] text-center">
-          <p className="text-gray-700 text-sm">
-            Belum Mempunyai Akun?{" "}
+        {/* Footer */}
+        <div className="text-center mt-3 text-sm">
+          <p className="text-gray-600">
+            Belum punya akun?{" "}
             <Link
-              to={"/daftar"}
-              className="text-green-500 font-medium hover:underline"
+              to={"/"}
+              className="text-purple-500 hover:underline font-medium"
             >
-              Daftar
+              Kembali
             </Link>
           </p>
-        </div>
-        <div className="bg-white p-4 mt-3 shadow-md w-full max-w-2xl rounded-[2px] text-center">
-          <Link
-            to="/"
-            className="text-sm text-blue-500 hover:underline font-medium"
-          >
-            Kembali ke Halaman Utama
-          </Link>
         </div>
       </div>
     </div>

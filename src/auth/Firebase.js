@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 // Firebase config (gantilah dengan konfigurasi proyek Firebase Anda)
 const firebaseConfig = {
-  apiKey: "AIzaSyDZMF1uCe23nkGUy47PIY9cl3uRrKV_aIU",
-  authDomain: "projek-fekon.firebaseapp.com",
-  projectId: "projek-fekon",
-  storageBucket: "projek-fekon.firebasestorage.app",
-  messagingSenderId: "397062555427",
-  appId: "1:397062555427:web:dcc7da8a5b244ec97b2e96",
-  measurementId: "G-V1V0MZVZXC",
+  apiKey: "AIzaSyBjaN-Q2hRHisJC_M91w9zueQ0Naccci-Y",
+  authDomain: "projek-baru-b1e43.firebaseapp.com",
+  projectId: "projek-baru-b1e43",
+  storageBucket: "projek-baru-b1e43.firebasestorage.app",
+  messagingSenderId: "916444120192",
+  appId: "1:916444120192:web:e9cab22314c826a0e1d265",
+  measurementId: "G-KQ9YNJZ0XF"
 };
 
 const app = initializeApp(firebaseConfig);

@@ -7,14 +7,15 @@ export function parseAndFormatDateString(dateString) {
     return `${day}-${month}-${year}`;
   }
 
-  export function capitalizeWords(text) {
-    return text
-      .split(" ")
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
-  }
-  
+export function capitalizeWords(text) {
+  if (typeof text !== "string") return "";
 
+  return text
+    .trim()
+    .split(/\s+/) // Menghilangkan spasi ganda
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
+}
 
 
 /**

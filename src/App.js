@@ -1,14 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./component/Login";
 import SplashPage from "./pages/SplashPage";
-import Register from "./component/Register";
-import ProtectedRoute from "./ProtectedRoute";
-import DashboardPage from "./pages/DashboardPage";
-import ProdukPage from "./pages/ProdukPage";
-import TransaksiPage from "./pages/TransaksiPage";
 import { ToastContainer } from "react-toastify"; // ✅ Tambahkan ini
 import "react-toastify/dist/ReactToastify.css"; // ✅ Tambahkan ini juga
-import Footer from "./component/Footer";
+import GenrePage from "./pages/GenrePage";
+import LabelPage from "./pages/LabelPage";
+import LaguPage from "./pages/LaguPage";
+import PenyanyiPage from "./pages/PenyanyiPage";
+import PrapemrosesPage from "./pages/PrapemrosesPage";
+import PemrosesanPage from "./pages/PemrosesanPage";
+import ValidasiPage from "./pages/ValidasiPage";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -21,46 +23,75 @@ function App() {
             element={
               <div>
                 <Login />
-                <Footer />
               </div>
             }
           />
           <Route
-            path="/daftar"
-            element={
-              <div>
-                <Register />
-                <Footer />
-              </div>
-            }
-          />
-          <Route
-            path="/dashboard"
+            path="/genre"
             element={
               <ProtectedRoute>
-                <DashboardPage />
+                <GenrePage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/produk"
+            path="/label"
             element={
               <ProtectedRoute>
-                <ProdukPage />
+                <LabelPage />
               </ProtectedRoute>
             }
           />
           <Route
-            path="/transaksi"
+            path="/lagu"
             element={
               <ProtectedRoute>
-                <TransaksiPage />
+                <LaguPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/penyanyi"
+            element={
+              <ProtectedRoute>
+                <PenyanyiPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pra-pemrosesan"
+            element={
+              <ProtectedRoute>
+                <PrapemrosesPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pemrosesan"
+            element={
+              <ProtectedRoute>
+                <PemrosesanPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/validasi"
+            element={
+              <ProtectedRoute>
+                <ValidasiPage/>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pemrosesan"
+            element={
+              <ProtectedRoute>
+                <PemrosesanPage/>
               </ProtectedRoute>
             }
           />
         </Routes>
 
-        {/* ✅ Toast Container di luar <Routes> */}
         <ToastContainer
           position="top-right"
           autoClose={3000}

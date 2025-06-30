@@ -9,6 +9,7 @@ import {
   FaCompactDisc,
 } from "react-icons/fa";
 import { youtubeThumbnailFromUrl } from "../../utils/helper";
+import { Link } from "react-router-dom";
 
 const backdrop = {
   visible: { opacity: 1 },
@@ -32,9 +33,7 @@ const DetailLagu = ({ onClose, judul }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8000/lagu/judul/${judul}`
-        );
+        const response = await axios.get(`http://localhost:8000/lagu/${judul}`);
         setData(response.data);
       } catch (err) {
         setError("Gagal mengambil data lagu");
@@ -44,7 +43,6 @@ const DetailLagu = ({ onClose, judul }) => {
     };
     fetchData();
   }, [judul]);
-
 
   return (
     <AnimatePresence mode="wait">
@@ -66,14 +64,14 @@ const DetailLagu = ({ onClose, judul }) => {
         >
           <button
             onClick={() => onClose(false)}
-            className="absolute top-3 right-3 text-gray-400 hover:text-gray-800 text-2xl transition"
+            className="absolute top-3 right-3 text-gray-400 hover:text-gray-800 text-xl transition"
             aria-label="Close"
           >
             &times;
           </button>
 
           {/* Header */}
-          <h2 className="text-center text-2xl font-bold text-gray-800 mb-6">
+          <h2 className="text-center text-xl font-bold text-gray-800 mb-6">
             Detail Lagu
           </h2>
 
@@ -86,11 +84,13 @@ const DetailLagu = ({ onClose, judul }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
               {/* Gambar */}
               <div className="w-full h-full">
-                <img
-                  src={youtubeThumbnailFromUrl(data.link)}
-                  alt="Thumbnail"
-                  className="w-full h-auto rounded-xl shadow-md object-cover"
-                />
+                <Link to={data.link}>
+                  <img
+                    src={youtubeThumbnailFromUrl(data.link)}
+                    alt="Thumbnail"
+                    className="w-full h-auto rounded-xl shadow-md object-cover"
+                  />
+                </Link>
               </div>
 
               {/* Detail */}
@@ -105,7 +105,11 @@ const DetailLagu = ({ onClose, judul }) => {
                 <div className="flex items-center gap-2">
                   <FaMicrophoneAlt className="text-indigo-500" />
                   <span className="font-medium text-gray-500">Penyanyi:</span>
-                  <span className="ml-auto text-right">{data.penyanyi}</span>
+                  <span className="ml-auto text-right">
+                    {data.penyanyi_list && data.penyanyi_list.length > 0
+                      ? data.penyanyi_list.map((p) => p.nama).join(", ")
+                      : "-"}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FaCalendarAlt className="text-indigo-500" />
@@ -117,12 +121,22 @@ const DetailLagu = ({ onClose, judul }) => {
                 <div className="flex items-center gap-2">
                   <FaTags className="text-indigo-500" />
                   <span className="font-medium text-gray-500">Genre:</span>
-                  <span className="ml-auto text-right">{data.genre}</span>
+                  <span className="ml-auto text-right">
+                    <span className="ml-auto text-right">
+                      {data.genre_list && data.genre_list.length > 0
+                        ? data.genre_list.join(", ")
+                        : "-"}
+                    </span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FaCompactDisc className="text-indigo-500" />
                   <span className="font-medium text-gray-500">Label:</span>
-                  <span className="ml-auto text-right">{data.label}</span>
+                  <span className="ml-auto text-right">
+                    {data.penyanyi_list && data.penyanyi_list.length > 0
+                      ? data.penyanyi_list.map((p) => p.label).join(", ")
+                      : "-"}
+                  </span>
                 </div>
 
                 {/* Lirik */}

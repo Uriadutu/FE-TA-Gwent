@@ -62,8 +62,8 @@ const Register = () => {
               <div className="flex flex-col w-full items-center">
                 <img src={Logo} alt="Logo" className="w-24 sm:w-28 mb-2" />
                 <div className="relative w-full z-10 mb-3">
-                  <div className="text-gray-800 text-center z-10 absolute flex w-full justify-center font-semibold text-2xl">
-                    <p className="bg-white px-3 sm:text-2xl text-lg">Daftar</p>
+                  <div className="text-gray-800 text-center z-10 absolute flex w-full justify-center font-semibold text-xl">
+                    <p className="bg-white px-3 sm:text-xl text-lg">Daftar</p>
                   </div>
                   <div className="absolute top-4 sm:top-5 z-0 w-full">
                     <div className="border-b border-gray-400 w-full"></div>
