@@ -102,7 +102,15 @@ const Splash = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {laguList.length > 0
           ? laguList
-              .filter((lagu) => lagu.skor_kemiripan !== 0) // ✅ hanya tampilkan skor > 0
+              .filter((lagu) => lagu.skor_kemiripan !== 0)
+              .sort((a, b) => {
+                const skorA = parseFloat(a.skor_kemiripan.toFixed(4));
+                const skorB = parseFloat(b.skor_kemiripan.toFixed(4));
+                if (skorA === skorB) {
+                  return parseInt(b.tahun) - parseInt(a.tahun);
+                }
+                return skorB - skorA;
+              })
               .map((lagu, index) => (
                 <div
                   key={index}

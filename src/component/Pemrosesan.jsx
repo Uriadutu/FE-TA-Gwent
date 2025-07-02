@@ -12,7 +12,7 @@ const Pemrosesan = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [openModalDetail, setOpenModalDetail] = useState(false);
-  const [idLagu, setIdLagu] = useState("")
+  const [idLagu, setIdLagu] = useState("");
 
   const [showAll, setShowAll] = useState(false);
   const [showAllCosine, setShowAllCosine] = useState(false);
@@ -39,18 +39,16 @@ const Pemrosesan = () => {
   };
 
   console.log(hasil);
-  
 
   const handleDetail = (id) => {
     setIdLagu(id);
     setOpenModalDetail(true);
     console.log(id, "dayta");
-    
   };
 
   return (
     <div className="p-2">
-       <AnimatePresence>
+      <AnimatePresence>
         {openModalDetail && (
           <DetailLaguModal onClose={setOpenModalDetail} idLagu={idLagu} />
         )}
@@ -69,10 +67,7 @@ const Pemrosesan = () => {
                 placeholder="Masukkan keyword lagu..."
                 className="border px-3 py-2 rounded w-full"
               />
-              <button
-                type="submit"
-                className="btn-add"
-              >
+              <button type="submit" className="btn-add">
                 Cari
               </button>
             </div>
@@ -602,8 +597,11 @@ const Pemrosesan = () => {
                     </tbody>
                   </table>
                 </div>
-                 <div className="p-1 text-purple-700 inline-block text-sm bg-purple-100 rounded">
-                  <p>Total: {hasil.step_by_step.tfidf_dokumen.length} Dokumen Lagu</p>
+                <div className="p-1 text-purple-700 inline-block text-sm bg-purple-100 rounded">
+                  <p>
+                    Total: {hasil.step_by_step.tfidf_dokumen.length} Dokumen
+                    Lagu
+                  </p>
                 </div>
               </div>
 
@@ -647,36 +645,46 @@ const Pemrosesan = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {hasil.top_5_rekomendasi?.map((lagu, index) => (
-                        <tr key={index} className="hover:bg-gray-50">
-                          <td className="border px-3 py-2">{index + 1}</td>
-                          <td className="border px-3 py-2">{lagu.judul}</td>
-                          <td className="border px-3 py-2">
-                            {lagu.penyanyi?.join(", ")}
-                          </td>
-                          <td className="border px-3 py-2">{lagu.tahun}</td>
-                          <td className="border px-3 py-2">
-                            {lagu.genre?.join(", ")}
-                          </td>
-                          <td className="border px-3 py-2">
-                            {lagu.label?.join(", ")}
-                          </td>
-                          <td className="border px-3 py-2">
-                            {lagu.skor_kemiripan}
-                          </td>
-                          <td className="border px-3 py-2 text-center">
-                            {lagu.vektor_index}
-                          </td>
-                          <td className="border px-3 py-2 text-center">
-                            <button
-                              className=""
-                              onClick={() => handleDetail(lagu.id)}
-                            >
-                                <MdOutlineRemoveRedEye/>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                      {hasil.top_5_rekomendasi
+                        ?.slice()
+                        .sort((a, b) => {
+                          const skorA = parseFloat(a.skor_kemiripan.toFixed(4));
+                          const skorB = parseFloat(b.skor_kemiripan.toFixed(4));
+                          if (skorA === skorB) {
+                            return parseInt(b.tahun) - parseInt(a.tahun);
+                          }
+                          return skorB - skorA;
+                        })
+                        .map((lagu, index) => (
+                          <tr key={index} className="hover:bg-gray-50">
+                            <td className="border px-3 py-2">{index + 1}</td>
+                            <td className="border px-3 py-2">{lagu.judul}</td>
+                            <td className="border px-3 py-2">
+                              {lagu.penyanyi?.join(", ")}
+                            </td>
+                            <td className="border px-3 py-2">{lagu.tahun}</td>
+                            <td className="border px-3 py-2">
+                              {lagu.genre?.join(", ")}
+                            </td>
+                            <td className="border px-3 py-2">
+                              {lagu.label?.join(", ")}
+                            </td>
+                            <td className="border px-3 py-2">
+                              {lagu.skor_kemiripan}
+                            </td>
+                            <td className="border px-3 py-2 text-center">
+                              {lagu.vektor_index}
+                            </td>
+                            <td className="border px-3 py-2 text-center">
+                              <button
+                                className=""
+                                onClick={() => handleDetail(lagu.id)}
+                              >
+                                <MdOutlineRemoveRedEye />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
