@@ -9,7 +9,6 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import Pagination from "./items/Pagenation";
 import EditGenreModal from "./modals/EditGenreModal";
 import { GoPencil } from "react-icons/go";
-import { GoPencil } from "react-icons/go";
 
 const Genre = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
