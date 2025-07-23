@@ -10,6 +10,7 @@ import Pagination from "./items/Pagenation";
 import EditGenreModal from "./modals/EditGenreModal";
 import { GoPencil } from "react-icons/go";
 
+
 const Genre = () => {
   const [openAddModal, setOpenAddModal] = useState(false);
   const [dataGenre, setDataGenre] = useState([]);
